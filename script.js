@@ -1,9 +1,22 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signOut 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { 
+  getFirestore, 
+  collection, 
+  addDoc, 
+  onSnapshot, 
+  updateDoc, 
+  doc, 
+  deleteDoc 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+// ====== Firebase конфиг ======
 const firebaseConfig = {
   apiKey: "AIzaSyBpRLrNdVqCoFjAqMxnnV57G3WD-iVm050",
   authDomain: "task-manager-5433f.firebaseapp.com",
@@ -18,12 +31,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// РЕГИСТРАЦИЯ
+// ====== РЕГИСТРАЦИЯ ======
 document.getElementById("registerBtn").onclick = async () => {
   try {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
-
     await createUserWithEmailAndPassword(auth, email, password);
     alert("Аккаунт создан");
   } catch (error) {
@@ -31,36 +43,38 @@ document.getElementById("registerBtn").onclick = async () => {
   }
 };
 
-// ВХОД
+// ====== ВХОД ======
 document.getElementById("loginBtn").onclick = async () => {
   try {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
-
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     alert(error.message);
   }
 };
 
-// ВЫХОД
+// ====== ВЫХОД ======
 document.getElementById("logoutBtn").onclick = () => {
   signOut(auth);
 };
 
-// Проверка авторизации
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    document.getElementById("auth").style.display = "none";
-    document.getElementById("app").style.display = "block";
-    loadTasks();
-  } else {
-    document.getElementById("auth").style.display = "block";
-    document.getElementById("app").style.display = "none";
-  }
+// ====== ПРОВЕРКА АВТОРИЗАЦИИ ======
+document.addEventListener("DOMContentLoaded", () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Пользователь уже вошёл:", user.email);
+      document.getElementById("auth").style.display = "none";
+      document.getElementById("app").style.display = "block";
+      loadTasks();
+    } else {
+      document.getElementById("auth").style.display = "block";
+      document.getElementById("app").style.display = "none";
+    }
+  });
 });
 
-// ДОБАВЛЕНИЕ ЗАДАЧИ
+// ====== ДОБАВЛЕНИЕ ЗАДАЧИ ======
 document.getElementById("addTaskBtn").onclick = async () => {
   const text = document.getElementById("taskInput").value;
   const deadline = document.getElementById("deadlineInput").value;
@@ -73,13 +87,15 @@ document.getElementById("addTaskBtn").onclick = async () => {
   await addDoc(collection(db, "tasks"), {
     text: text,
     deadline: deadline,
-    done: false
+    done: false,
+    notified: false,
+    overdueNotified: false
   });
 
   document.getElementById("taskInput").value = "";
 };
 
-// ЗАГРУЗКА ЗАДАЧ
+// ====== ЗАГРУЗКА ЗАДАЧ ======
 function loadTasks() {
   const tasksContainer = document.getElementById("tasks");
 
@@ -123,14 +139,14 @@ function loadTasks() {
   });
 }
 
-// СДЕЛАНО
+// ====== СДЕЛАНО ======
 window.markDone = async (id, currentStatus) => {
   await updateDoc(doc(db, "tasks", id), {
     done: !currentStatus
   });
 };
 
-// УДАЛЕНИЕ
+// ====== УДАЛЕНИЕ ======
 window.deleteTask = async (id) => {
   await deleteDoc(doc(db, "tasks", id));
 };
