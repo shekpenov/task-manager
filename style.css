@@ -119,4 +119,20 @@ button {
     font-size: 12px;
     padding: 6px;
   }
+  
+  #deadlineInput {
+  width: 250px;           /* ширина поля */
+  padding: 8px 12px;      /* внутренние отступы */
+  font-size: 16px;         /* размер текста */
+  border: 2px solid #5b2e5c; /* цвет и толщина рамки */
+  border-radius: 8px;     /* скругление углов */
+  outline: none;          /* убираем стандартное выделение */
+  transition: border 0.3s, box-shadow 0.3s; /* плавный эффект при фокусе */
+  }
+
+  #deadlineInput:focus {
+  border-color: #7c3b7d; /* рамка при фокусе */
+  box-shadow: 0 0 5px rgba(123, 59, 125, 0.5); /* тень при фокусе */
+  }
 }
+
