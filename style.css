@@ -1,16 +1,120 @@
+/* ====== ОБЩИЕ СТИЛИ ====== */
 body {
-  font-family: Arial;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
   padding: 20px;
+  display: flex;
+  justify-content: center;
 }
 
-input, button {
-  display: block;
+h2 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* ====== КАРТОЧКА ВХОДА ====== */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
   margin: 10px 0;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+button {
+  padding: 12px;
+  margin-top: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  background: #2c7be5;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #1a68d1;
+}
+
+/* ====== КОНТЕЙНЕР ПРИЛОЖЕНИЯ ====== */
+.container {
+  display: none;
+  width: 100%;
+  max-width: 500px;
+}
+
+.task-inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.logout {
+  background: #e74c3c;
+}
+
+.logout:hover {
+  background: #c0392b;
+}
+
+/* ====== СПИСОК ЗАДАЧ ====== */
+.tasks {
+  margin-top: 20px;
+}
+
+.task {
+  background: white;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.task h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.task p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.task button {
+  margin-top: 8px;
+  font-size: 13px;
   padding: 8px;
 }
 
-li {
-  background: #f2f2f2;
-  padding: 10px;
-  margin-bottom: 10px;
+/* ====== МАЛЫЙ ЭКРАН ====== */
+@media (max-width: 450px) {
+  .task-inputs input, .task-inputs button {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .task h3 {
+    font-size: 14px;
+  }
+
+  .task p {
+    font-size: 12px;
+  }
 }
